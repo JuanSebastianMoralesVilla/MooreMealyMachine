@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * @author Sebastian Morales (JuanSebastianMoralesVilla)
+ * @author Alex Sanchez (ALEXJR2002)
+ * @author Miguel Sarasti (MSarasti)
+ *
+ */
 public abstract class Automaton {
 
     private int numberOfStates;
