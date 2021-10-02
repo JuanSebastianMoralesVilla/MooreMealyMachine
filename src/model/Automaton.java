@@ -1,20 +1,19 @@
 package model;
 
-public class Automaton {
+public abstract class Automaton {
 
     private int numberOfStates;
     private String alphabet;
-    private MealyMachine mealyMachine;
-    private MooreMachine mooreMachine;
 
-    public Automaton (int numberOfStates, String alphabet, boolean machine) {
+    public Automaton (int numberOfStates, String alphabet) {
         this.numberOfStates = numberOfStates;
         this.alphabet = alphabet;
-        if (machine) {  //Create a Mealy machine if true or a Moore otherwise
+        /*if (machine) {  //Create a Mealy machine if true or a Moore otherwise
             mealyMachine = new MealyMachine();
         }else {
             mooreMachine = new MooreMachine();
-        }
+        }*/
+        //TODO assign this conditional to the GUI
     }
 
     public int getNumberOfStates() {
@@ -33,19 +32,13 @@ public class Automaton {
         this.alphabet = alphabet;
     }
 
-    public MealyMachine getMealyMachine() {
-        return mealyMachine;
+    public boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 
-    public void setMealyMachine(MealyMachine mealyMachine) {
-        this.mealyMachine = mealyMachine;
-    }
-
-    public MooreMachine getMooreMachine() {
-        return mooreMachine;
-    }
-
-    public void setMooreMachine(MooreMachine mooreMachine) {
-        this.mooreMachine = mooreMachine;
-    }
 }
