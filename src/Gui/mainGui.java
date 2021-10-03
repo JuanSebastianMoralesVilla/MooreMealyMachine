@@ -20,6 +20,7 @@ public class mainGui extends Application {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setTitle("Automata");
+
 		stage.setScene(scene);
 	
 		stage.show();
