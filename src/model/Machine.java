@@ -72,6 +72,53 @@ public abstract class Machine<Q extends Comparable<Q>,S,R> extends GraphList<Q> 
 	}
 	
 	public abstract Machine<Q, S, R> minimize();
-	
-	
+
+	public HashMap<Integer, ArrayList<Q>> redefineState(ArrayList<ArrayList<Q>> parts, int targetSubset, S s) {
+		ArrayList<Q> reviewedState = parts.get(targetSubset);
+		HashMap<Integer, ArrayList<Q>> refinedPartition = new HashMap<>();
+
+		for (int i = 0; i < reviewedState.size();i++) {
+			Q dst = nextStates(reviewedState.get(i), s);
+			boolean found = false;
+			int j;
+			for (j = 0; j < parts.size() && !found; j++) {
+				ArrayList<Q> currentPartition = parts.get(j);
+				found = currentPartition.contains(dst);
+			}
+			if (!refinedPartition.containsKey(j)) {
+				refinedPartition.put(j, new ArrayList<>());
+			}
+			refinedPartition.get(j).add(reviewedState.get(i));
+		}
+		return refinedPartition;
+	}
+
+	public ArrayList<ArrayList<Q>> partitioningStepTwoAndStepThree(ArrayList<ArrayList<Q>> parts) {
+		ArrayList<ArrayList<Q>> prevParts;
+		boolean previousEqualsCurrent = false;
+		boolean centinela = false;
+		while (!previousEqualsCurrent && !centinela) {
+			prevParts = parts;
+			for (S s : getS()) {
+				HashMap<Integer, HashMap<Integer, ArrayList<Q>>> originPartitioned = new HashMap<>();
+				int newNumberOfPartitions = 0;
+				for (int i = 0; i < parts.size(); i++) {
+					HashMap<Integer, ArrayList<Q>> refinement = redefineState(parts, i, s);
+					originPartitioned.put(i, refinement);
+					newNumberOfPartitions += refinement.size();
+				}
+				if (newNumberOfPartitions > parts.size()) {
+
+					parts = new ArrayList<>();
+					for (int i = 0; i < originPartitioned.size(); i++) {
+						parts.addAll(originPartitioned.get(i).values());
+					}
+
+					centinela = true;
+				}
+			}
+			previousEqualsCurrent = prevParts.size() == parts.size();
+		}
+		return parts;
+	}
 }
