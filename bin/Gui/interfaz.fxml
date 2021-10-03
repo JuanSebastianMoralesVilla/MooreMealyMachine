@@ -44,14 +44,14 @@
                <children>
                   <AnchorPane prefHeight="394.0" prefWidth="443.0">
                      <children>
-                        <ScrollPane fx:id="minimizeScroll" layoutX="38.0" layoutY="333.0" prefHeight="245.0" prefWidth="354.0" />
+                        <ScrollPane fx:id="minimizeScroll" layoutX="31.0" layoutY="314.0" prefHeight="269.0" prefWidth="361.0" />
                         <ScrollPane fx:id="scrollPane1" layoutX="29.0" layoutY="14.0" prefHeight="245.0" prefWidth="366.0" />
                         <Button id="bt_Min" fx:id="btMin" layoutX="164.0" layoutY="273.0" mnemonicParsing="false" text="Minimizar" />
                      </children>
                   </AnchorPane>
                </children>
             </HBox>
-            <Button fx:id="btHelp" layoutX="49.0" layoutY="543.0" mnemonicParsing="false" text="Ayuda" />
+            <Button fx:id="btHelp" layoutX="49.0" layoutY="543.0" mnemonicParsing="false" onAction="#help" text="Ayuda" />
             <Separator layoutX="8.0" layoutY="317.0" prefHeight="3.0" prefWidth="310.0" />
             <Label layoutX="40.0" layoutY="136.0" text="Seleccionar Automata:" textFill="WHITE" />
          </children>
