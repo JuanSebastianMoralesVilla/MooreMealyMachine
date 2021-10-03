@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -14,42 +15,45 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.StateMachineGui">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.StateMachineGui">
    <center>
-      <Pane prefHeight="583.0" prefWidth="796.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="599.0" prefWidth="724.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="444.0" fitWidth="518.0" layoutX="-277.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="620.0" fitWidth="899.0" layoutX="-450.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Images/fondoazul.png" />
                </image>
             </ImageView>
-            <Label layoutX="37.0" layoutY="119.0" prefHeight="17.0" prefWidth="50.0" text="Estados:" textFill="WHITE" />
-            <TextField id="txt_States" fx:id="txtEstados" layoutX="94.0" layoutY="114.0" prefHeight="26.0" prefWidth="98.0" />
-            <TextField id="txt_alphabet" fx:id="txtAlfabeto" layoutX="98.0" layoutY="161.0" prefHeight="26.0" prefWidth="94.0" />
-            <Label layoutX="38.0" layoutY="165.0" text="Alfabeto:" textFill="WHITE" />
-            <RadioButton id="rd_Mealy" fx:id="tgMealy" layoutX="99.0" layoutY="208.0" mnemonicParsing="false" text="Mealy" textFill="WHITE">
+            <Label layoutX="111.0" layoutY="194.0" prefHeight="17.0" prefWidth="50.0" text="Estados:" textFill="WHITE" />
+            <TextField id="txt_States" fx:id="txtEstados" layoutX="168.0" layoutY="189.0" prefHeight="26.0" prefWidth="98.0" />
+            <TextField id="txt_alphabet" fx:id="txtAlfabeto" layoutX="171.0" layoutY="233.0" prefHeight="26.0" prefWidth="94.0" />
+            <Label layoutX="111.0" layoutY="237.0" text="Alfabeto:" textFill="WHITE" />
+            <RadioButton id="rd_Mealy" fx:id="tgMealy" layoutX="188.0" layoutY="127.0" mnemonicParsing="false" text="Mealy" textFill="WHITE">
                <toggleGroup>
                   <ToggleGroup fx:id="machine" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton id="rd_Moore" fx:id="tgMoore" layoutX="99.0" layoutY="238.0" mnemonicParsing="false" text="Moore" textFill="WHITE" toggleGroup="$machine" />
-            <Button id="bt_crearTabla" fx:id="btCrearTabla" layoutX="80.0" layoutY="317.0" mnemonicParsing="false" onAction="#generateTable" text="Crear tabla" />
+            <RadioButton id="rd_Moore" fx:id="tgMoore" layoutX="189.0" layoutY="153.0" mnemonicParsing="false" text="Moore" textFill="WHITE" toggleGroup="$machine" />
+            <Button id="bt_crearTabla" fx:id="btCrearTabla" layoutX="150.0" layoutY="334.0" mnemonicParsing="false" onAction="#generateTable" text="Crear tabla" />
             <Label layoutX="19.0" layoutY="42.0" prefHeight="50.0" prefWidth="198.0" text="REDUCCION MAQUINAS DE ESTADO FINITO" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
                <font>
                   <Font name="Futura Medium" size="14.0" />
                </font>
             </Label>
-            <HBox layoutX="232.0" layoutY="1.0" prefHeight="394.0" prefWidth="368.0">
+            <HBox layoutX="319.0" layoutY="1.0" prefHeight="610.0" prefWidth="408.0">
                <children>
-                  <AnchorPane prefHeight="394.0" prefWidth="370.0">
+                  <AnchorPane prefHeight="394.0" prefWidth="443.0">
                      <children>
-                        <ScrollPane fx:id="minimizeScroll" layoutX="33.0" layoutY="231.0" prefHeight="149.0" prefWidth="304.0" />
-                        <ScrollPane fx:id="scrollPane1" layoutX="29.0" layoutY="14.0" prefHeight="164.0" prefWidth="313.0" />
-                        <Button id="bt_Min" fx:id="btMin" layoutX="157.0" layoutY="191.0" mnemonicParsing="false" text="Minimizar" />
+                        <ScrollPane fx:id="minimizeScroll" layoutX="38.0" layoutY="333.0" prefHeight="245.0" prefWidth="354.0" />
+                        <ScrollPane fx:id="scrollPane1" layoutX="29.0" layoutY="14.0" prefHeight="245.0" prefWidth="366.0" />
+                        <Button id="bt_Min" fx:id="btMin" layoutX="164.0" layoutY="273.0" mnemonicParsing="false" text="Minimizar" />
                      </children>
                   </AnchorPane>
                </children>
             </HBox>
+            <Button fx:id="btHelp" layoutX="49.0" layoutY="543.0" mnemonicParsing="false" text="Ayuda" />
+            <Separator layoutX="8.0" layoutY="317.0" prefHeight="3.0" prefWidth="310.0" />
+            <Label layoutX="40.0" layoutY="136.0" text="Seleccionar Automata:" textFill="WHITE" />
          </children>
       </Pane>
    </center>

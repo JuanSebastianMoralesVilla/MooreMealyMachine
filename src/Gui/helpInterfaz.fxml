@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="109.0" layoutY="36.0" text="Informacion" />
+      <Label layoutX="26.0" layoutY="98.0" text="Moore Machine:" />
+      <Label layoutX="27.0" layoutY="154.0" text="Mealy Machine:" />
+      <Label layoutX="28.0" layoutY="221.0" text="Estados:" />
+      <Label layoutX="27.0" layoutY="329.0" text="Alfabeto:" />
+      <Button layoutX="114.0" layoutY="513.0" mnemonicParsing="false" text="Cerrar" />
+   </children>
+</AnchorPane>
