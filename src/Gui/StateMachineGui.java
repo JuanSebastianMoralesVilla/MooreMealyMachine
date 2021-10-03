@@ -10,14 +10,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import model.MealyMachine;
+import model.*;
 
 
 
 public class StateMachineGui {
-	
-
-
 	    @FXML
 	    private TextField txtEstados;
 
@@ -63,9 +60,7 @@ public class StateMachineGui {
 	    
 	    public void initialize() {
 	    	minimizeScroll.setVisible(false);
-	     
-
-	        finalStates = new ArrayList<Character>();
+	    	finalStates = new ArrayList<Character>();
 	        
 	    }
 	    
@@ -107,16 +102,26 @@ public class StateMachineGui {
 	    
 	    @FXML
 	    public void generateTable() {
-	    	
 	    	finalStates = new ArrayList<Character>();
 	    	
 	    	GridPane gridP2 = new GridPane();
-	    	 gridP2.setHgap(3);
-	         gridP2.setVgap(3);
-	         minimizeScroll.setContent(gridP2);
-	         
-	        filas = Integer.parseInt(txtEstados.getText());
-	       estimulos = txtAlfabeto.getText().split(",");
+	    	gridP2.setHgap(3);
+	        gridP2.setVgap(3);
+	        minimizeScroll.setContent(gridP2);
+	        
+	        String split = "";
+	        String txtAlph = txtAlfabeto.getText();
+	        String txtEst = txtEstados.getText();
+	        if(txtAlph.contains(";")) {
+	        	split = ";";
+	        }else if(txtAlph.contains(",")) {
+	        	split = ",";
+	        }else {
+	        	split = " ";
+	        }
+	        
+	        filas = Integer.parseInt(txtEst);
+	        estimulos = txtAlph.split(split);
 	        columnas = estimulos.length;
 	        if (filas > 0 && filas <= 26) {
 	        	btMin.setVisible(true);
@@ -204,7 +209,7 @@ public class StateMachineGui {
 	   // automata de mealy
 	    /// metodo por mejorar
 	    
-	    public void mealyAutomaton() {
+	   /* public void mealyAutomaton() {
 	        String[][] matrix = readTextFields("MEALY");
 	        MealyMachine<Character, Character, Character> mealyMachine = new MealyMachine<>('A');
 
@@ -251,6 +256,6 @@ public class StateMachineGui {
 	                ta.setPrefWidth(45);
 	                gridPanel1.add(ta, j+15, i+5);
 	            }
-	        }
-	    }
+	        
+	    }*/
 }

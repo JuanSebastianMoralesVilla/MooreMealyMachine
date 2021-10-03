@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.StateMachineGui">
    <center>
       <Pane prefHeight="583.0" prefWidth="796.0" BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +33,7 @@
                </toggleGroup>
             </RadioButton>
             <RadioButton id="rd_Moore" fx:id="tgMoore" layoutX="99.0" layoutY="238.0" mnemonicParsing="false" text="Moore" textFill="WHITE" toggleGroup="$machine" />
-            <Button id="bt_crearTabla" fx:id="btCrearTabla" layoutX="80.0" layoutY="317.0" mnemonicParsing="false" text="Crear tabla" />
+            <Button id="bt_crearTabla" fx:id="btCrearTabla" layoutX="80.0" layoutY="317.0" mnemonicParsing="false" onAction="#generateTable" text="Crear tabla" />
             <Label layoutX="19.0" layoutY="42.0" prefHeight="50.0" prefWidth="198.0" text="REDUCCION MAQUINAS DE ESTADO FINITO" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
                <font>
                   <Font name="Futura Medium" size="14.0" />
@@ -43,8 +43,8 @@
                <children>
                   <AnchorPane prefHeight="394.0" prefWidth="370.0">
                      <children>
-                        <ScrollPane layoutX="33.0" layoutY="231.0" prefHeight="149.0" prefWidth="304.0" />
-                        <ScrollPane layoutX="29.0" layoutY="14.0" prefHeight="164.0" prefWidth="313.0" />
+                        <ScrollPane fx:id="minimizeScroll" layoutX="33.0" layoutY="231.0" prefHeight="149.0" prefWidth="304.0" />
+                        <ScrollPane fx:id="scrollPane1" layoutX="29.0" layoutY="14.0" prefHeight="164.0" prefWidth="313.0" />
                         <Button id="bt_Min" fx:id="btMin" layoutX="157.0" layoutY="191.0" mnemonicParsing="false" text="Minimizar" />
                      </children>
                   </AnchorPane>
