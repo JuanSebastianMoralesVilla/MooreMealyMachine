@@ -374,6 +374,12 @@ public class GraphList<T extends Comparable<T>> implements IGraph<T> {
 		return map;
 	}
 
+	public ArrayList<T> mapToArrayList() {
+		ArrayList<T> verts = new ArrayList<>();
+		getMap().forEach((T t, Vertex<T> u) -> verts.add(t));
+		return verts;
+	}
+
 	public ArrayList<T> getAll() {
 		return all;
 	}
