@@ -46,9 +46,9 @@ public class MooreMachine<Q extends Comparable<Q>,S,R> extends Machine<Q, S, R> 
 			newState = parts.get(i).get(0);
 			minimizedMachine.insertState(newState, getResponses(newState));
 		}
-		ArrayList<Q> origen = minimizedMachine.getAll();
-		for (int i = 0; i < origen.size();i++) {
-			Q src = origen.get(i);
+		ArrayList<Q> origin = minimizedMachine.getAll();
+		for (int i = 0; i < origin.size();i++) {
+			Q src = origin.get(i);
 			for (S s : getS()) {
 				Q dst = nextStates(src, s);
 				boolean t = false;
