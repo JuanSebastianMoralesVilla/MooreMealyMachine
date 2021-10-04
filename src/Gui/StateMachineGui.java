@@ -47,6 +47,10 @@ public class StateMachineGui {
 
 	private GridPane gridPanel1;
 
+	private GridPane gridP1;
+
+	private GridPane gridP2;
+
 	private TextField[][] textfield;
 
 	private int filas;
@@ -58,6 +62,10 @@ public class StateMachineGui {
 	private ArrayList<Character> finalStates;
 
 	private String[] estimulos;
+
+	private MealyMachine<Character,Character,Character> mealyMachine;
+
+	private MooreMachine<Character,Character,Character> mooreMachine;
 
 	public void initialize() {
 		minimizeScroll.setVisible(false);
@@ -72,19 +80,19 @@ public class StateMachineGui {
 		int position = 0;
 		TextField ti = new TextField("State");
 		ti.setEditable(false);
-		grid.add(ti, 15, 3);
+		grid.add(ti, 1, 1);
 		for (int i = 1; i < columnas + 1; i++) {
 			TextField tfStates = new TextField(estimulos[i - 1]);
 			tfStates.setPrefWidth(30);
 			tfStates.setEditable(false);
-			grid.add(tfStates, i + 15, 3);
+			grid.add(tfStates, i + 1, 1);
 			position = i;
 		}
 
 		if (machine.getSelectedToggle() == tgMoore) {
 			TextField to = new TextField("Salida");
 			to.setEditable(false);
-			grid.add(to, position + 16, 3);
+			grid.add(to, position + 2, 1);
 		}
 	}
 
@@ -103,12 +111,12 @@ public class StateMachineGui {
 
 	@FXML
 	public void generateTable() {
-if(!validateTexfield()) {
-	return;
-}
+		if(!validateTexfield()) {
+			return;
+		}
 		finalStates = new ArrayList<Character>();
 
-		GridPane gridP2 = new GridPane();
+		gridP2 = new GridPane();
 		gridP2.setHgap(3);
 		gridP2.setVgap(3);
 		minimizeScroll.setContent(gridP2);
@@ -132,7 +140,7 @@ if(!validateTexfield()) {
 		if (filas > 0 && filas <= 50) {
 			btMin.setVisible(true);
 			// t1.setVisible(true);
-			GridPane gridP1 = new GridPane();
+			gridP1 = new GridPane();
 
 			gridP1.setHgap(5);
 			gridP1.setVgap(5);
@@ -148,20 +156,20 @@ if(!validateTexfield()) {
 					TextField ta = new TextField((char) (i + 64) + " ");
 					ta.setEditable(false);
 					ta.setPrefWidth(30);
-					gridP1.add(ta, 15, i + 5);
+					gridP1.add(ta, 1, i + 1);
 					for (int j = 1; j < columnas + 1; j++) {
 						ta = new TextField("");
 						ta.setPrefWidth(30);
 						ta.setPromptText("A" + (machine.getSelectedToggle() == tgMealy ? ",sucesor" : ""));
 						textfield[j - 1][i - 1] = ta;
-						gridP1.add(ta, j + 15, i + 5);
+						gridP1.add(ta, j + 1, i + 1);
 					}
 					if (machine.getSelectedToggle() == tgMoore) {
 						ta = new TextField("");
 						ta.setPrefWidth(30);
 						ta.setPromptText("a");
 						textfield[columnas][i - 1] = ta;
-						gridP1.add(ta, columnas + 16, i + 5);
+						gridP1.add(ta, columnas + 2, i + 1);
 					}
 				}
 			} catch (NegativeArraySizeException | IllegalArgumentException e) {
@@ -192,19 +200,124 @@ if(!validateTexfield()) {
 	// metodo para minizar el automata
 
 	@FXML
-	public void minimizeMachine() {
+	public void minimizeMachine(ActionEvent event) {
 		finalStates = new ArrayList<Character>();
 		gridPanel1 = new GridPane();
 		gridPanel1.setHgap(3);
 		gridPanel1.setVgap(3);
 
 		fillStates(gridPanel1);
+
 		if (machine.getSelectedToggle() == tgMoore) {
-			// ();
+			mooreMachine();
 		} else {
-			// mealyAutomaton();
+			mealyMachine();
 		}
 		minimizeScroll.setContent(gridPanel1);
+	}
+
+	private void mealyMachine() {
+		String[][] matrix = readTextFields("MEALY");
+		MealyMachine<Character, Character, Character> mealyMachine = new MealyMachine<>('A');
+
+		for (int j = 1; j < matrix[0].length; j++) {
+			char temp = (char) (j + 65);
+			mealyMachine.insertState(temp);
+		}
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				char temp = (char) (j + 65);
+				String[] cell = matrix[i][j].split(",");
+				mealyMachine.addConnection(temp, cell[0].charAt(0), estimulos[i].charAt(0), cell[1].charAt(0));
+			}
+		}
+		mealyMachine = mealyMachine.minimize();
+		int minStates = mealyMachine.getMap().size();
+
+		ArrayList<Character> minStatesList = mealyMachine.mapToArrayList();
+		for (int i = 1; i < minStates + 1; i++) {
+			char current = fillStatesColumns(minStatesList, i);
+			TextField ta;
+			for (int j = 1; j < columnas + 1; j++) {
+				char stimulus = estimulos[j - 1].charAt(0);
+
+				boolean cent = false;
+				String answer = "xd ";
+
+				String cell = "" + mealyMachine.nextStates(current, stimulus);
+
+				for(int s = 0; s < minStatesList.size() && !cent; s++) {
+					System.out.println(s + "s1");
+					if(cell.charAt(0) == minStatesList.get(s)) {
+
+						System.out.println(s + "s2");
+						cent = true;
+						answer = "Q" + (s+1);
+					}
+				}
+
+				answer += "," + mealyMachine.nextStates(current, stimulus);
+				ta = new TextField(answer);
+				ta.setEditable(false);
+				ta.setPrefWidth(45);
+				gridP2.add(ta, j+15, i+5);
+			}
+		}
+	}
+
+	private void mooreMachine() {
+		String[][] matrix = readTextFields("MOORE");
+
+		MooreMachine<Character, Character, Character> mooreMachine = new MooreMachine<>('A', matrix[matrix.length - 1][0].charAt(0));
+		for (int j = 0; j < matrix[0].length; j++) {
+			char temp = (char) (j + 65);
+			//  System.out.println(temp);
+			mooreMachine.insertState(temp, matrix[matrix.length - 1][j].charAt(0));
+		}
+		for (int i = 0; i < matrix.length - 1; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				char temp = (char) (j + 65);
+				mooreMachine.addConnection(temp, matrix[i][j].charAt(0), estimulos[i].charAt(0));
+			}
+		}
+		mooreMachine = mooreMachine.minimize();
+		int minStates = mooreMachine.getMap().size();
+
+		ArrayList<Character> minStatesList = mooreMachine.mapToArrayList();
+
+		for (int i = 1; i < minStates + 1; i++) {
+			System.out.println(minStatesList);
+			char current = fillStatesColumns(minStatesList, i);
+			TextField ta = new TextField("" + mooreMachine.getResponses(current));
+
+			ta.setEditable(false);
+			ta.setPrefWidth(45);
+			gridP2.add(ta, columnas + 2, i+1);
+			for (int j = 1; j < columnas + 1; j++) {
+
+				boolean cent = false;
+				String answer = "xd ";
+				char f = mooreMachine.nextStates(current, estimulos[j - 1].charAt(0));
+				System.out.println(f);
+
+				for(int s = 0; s < minStatesList.size() && !cent; s++) {
+					System.out.println(s + "s1");
+					if(f == minStatesList.get(s)) {
+
+						System.out.println(s + "s2");
+						cent = true;
+						answer = "Q" + (s+1);
+					}
+				}
+
+				ta = new TextField(answer);
+				System.out.println(mooreMachine.nextStates(current, estimulos[j - 1].charAt(0)) + "AAAaa");
+				ta.setEditable(false);
+				ta.setPrefWidth(45);
+				gridP2.add(ta, j+2, i+1);
+			}
+		}
+
 	}
 
 	// automata de mealy
