@@ -3,6 +3,7 @@ package data_structures;
 import java.util.*;
 
 import data_structures.*;
+import data_structures.VertexNew.Color;
 
 public class GraphListSimple<E> {
 	private HashMap<E, VertexNew<E>> vertices;
@@ -10,7 +11,7 @@ public class GraphListSimple<E> {
 	private boolean isDirected;
 	private VertexNew<E> lastSrc;
 	
-	public AdjacencyListGraph(boolean isDirected) {
+	public GraphListSimple(boolean isDirected) {
 		this.isDirected = isDirected;
 		vertices = new HashMap<>();
 		adjacencyLists = new HashMap<>();
@@ -84,7 +85,7 @@ public class GraphListSimple<E> {
 	public boolean isEmpty() {
 		return vertices.isEmpty();
 	}
-
+/*
 	public boolean BFS(E src) {
 		if(containsVertex(src)) {
 			VertexNew<E> s = vertices.get(src);
@@ -121,6 +122,7 @@ public class GraphListSimple<E> {
 		}
 		return false;
 	}
+	*/
 
 	
 }

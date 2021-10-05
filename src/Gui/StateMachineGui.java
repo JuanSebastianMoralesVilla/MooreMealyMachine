@@ -180,7 +180,7 @@ public class StateMachineGui {
 		} else {
 			Alert a = new Alert(Alert.AlertType.ERROR);
 			a.setContentText(
-					"el maximo numero de estados para llenar es 26 que corresponden a las 26 letras del alfabeto.");
+					"Ingresa otro numero de estados valido");
 			a.show();
 		}
 
@@ -205,6 +205,7 @@ public class StateMachineGui {
 		gridPanel1 = new GridPane();
 		gridPanel1.setHgap(3);
 		gridPanel1.setVgap(3);
+		minimizeScroll.setVisible(true);
 
 		fillStates(gridPanel1);
 
@@ -237,30 +238,30 @@ public class StateMachineGui {
 		ArrayList<Character> minStatesList = mealyMachine.mapToArrayList();
 		for (int i = 1; i < minStates + 1; i++) {
 			char current = fillStatesColumns(minStatesList, i);
-			TextField ta;
+			TextField tanswer;
 			for (int j = 1; j < columnas + 1; j++) {
 				char stimulus = estimulos[j - 1].charAt(0);
 
-				boolean cent = false;
-				String answer = "xd ";
+				boolean b = false;
+				String answer = "verificate";
 
 				String cell = "" + mealyMachine.nextStates(current, stimulus);
 
-				for(int s = 0; s < minStatesList.size() && !cent; s++) {
+				for(int s = 0; s < minStatesList.size() && !b; s++) {
 					System.out.println(s + "s1");
 					if(cell.charAt(0) == minStatesList.get(s)) {
 
 						System.out.println(s + "s2");
-						cent = true;
+						b = true;
 						answer = "Q" + (s+1);
 					}
 				}
 
 				answer += "," + mealyMachine.nextStates(current, stimulus);
-				ta = new TextField(answer);
-				ta.setEditable(false);
-				ta.setPrefWidth(45);
-				gridP2.add(ta, j+15, i+5);
+				tanswer = new TextField(answer);
+				tanswer.setEditable(false);
+				tanswer.setPrefWidth(45);
+				gridP2.add(tanswer, j+5, i+5);
 			}
 		}
 	}
@@ -271,7 +272,7 @@ public class StateMachineGui {
 		MooreMachine<Character, Character, Character> mooreMachine = new MooreMachine<>('A', matrix[matrix.length - 1][0].charAt(0));
 		for (int j = 0; j < matrix[0].length; j++) {
 			char temp = (char) (j + 65);
-			//  System.out.println(temp);
+	
 			mooreMachine.insertState(temp, matrix[matrix.length - 1][j].charAt(0));
 		}
 		for (int i = 0; i < matrix.length - 1; i++) {
@@ -288,78 +289,39 @@ public class StateMachineGui {
 		for (int i = 1; i < minStates + 1; i++) {
 			System.out.println(minStatesList);
 			char current = fillStatesColumns(minStatesList, i);
-			TextField ta = new TextField("" + mooreMachine.getResponses(current));
+			TextField tanswer = new TextField("" + mooreMachine.getResponses(current));
 
-			ta.setEditable(false);
-			ta.setPrefWidth(45);
-			gridP2.add(ta, columnas + 2, i+1);
+			tanswer.setEditable(false);
+			tanswer.setPrefWidth(45);
+			gridP2.add(tanswer, columnas + 2, i+1);
 			for (int j = 1; j < columnas + 1; j++) {
 
-				boolean cent = false;
-				String answer = "xd ";
+				boolean validate = false;
+				String answer = "verificate ";
 				char f = mooreMachine.nextStates(current, estimulos[j - 1].charAt(0));
 				System.out.println(f);
 
-				for(int s = 0; s < minStatesList.size() && !cent; s++) {
+				for(int s = 0; s < minStatesList.size() && !validate; s++) {
 					System.out.println(s + "s1");
 					if(f == minStatesList.get(s)) {
 
 						System.out.println(s + "s2");
-						cent = true;
+						validate = true;
 						answer = "Q" + (s+1);
 					}
 				}
 
-				ta = new TextField(answer);
+				tanswer = new TextField(answer);
 				System.out.println(mooreMachine.nextStates(current, estimulos[j - 1].charAt(0)) + "AAAaa");
-				ta.setEditable(false);
-				ta.setPrefWidth(45);
-				gridP2.add(ta, j+2, i+1);
+				tanswer.setEditable(false);
+				tanswer.setPrefWidth(45);
+				gridP2.add(tanswer, j+2, i+1);
 			}
 		}
 
 	}
 
-	// automata de mealy
-	/// metodo por mejorar
-
-	/*
-	 * public void mealyAutomaton() { String[][] matrix = readTextFields("MEALY");
-	 * MealyMachine<Character, Character, Character> mealyMachine = new
-	 * MealyMachine<>('A');
-	 * 
-	 * for (int j = 1; j < matrix[0].length; j++) { char temp = (char) (j + 65);
-	 * //mealyMachine.insertarEstado(temp); } for (int i = 0; i < matrix.length;
-	 * i++) { for (int j = 0; j < matrix[0].length; j++) { char temp = (char) (j +
-	 * 65); String[] cell = matrix[i][j].split(","); //
-	 * mealyMachine.relacionarEstados(temp, cell[0].charAt(0),
-	 * estimulos[i].charAt(0), cell[1].charAt(0)); } }
-	 * 
-	 * mealyMachine = mealyMachine.minimize(); //int minStates =
-	 * mealyMachine.getOrder();
-	 * 
-	 * //ArrayList<Character> minStatesList = mealyMachine.getVertices(); //for (int
-	 * i = 1; i < minStates + 1; i++) { char current =
-	 * fillStatesColumns(minStatesList, i); TextField ta; for (int j = 1; j <
-	 * columnas + 1; j++) { char stimulus = estimulos[j - 1].charAt(0);
-	 * 
-	 * boolean cent = false; String answer = "mmmmmm ";
-	 * 
-	 * String cell = "" + mealyMachine.estadoDeTransicionDeUnaFuncion(current,
-	 * stimulus);
-	 * 
-	 * for(int s = 0; s < minStatesList.size() && !cent; s++) { System.out.println(s
-	 * + "s1"); if(cell.charAt(0) == minStatesList.get(s)) {
-	 * 
-	 * System.out.println(s + "s2"); cent = true; answer = "Q" + (s+1); } }
-	 * 
-	 * answer += "," + mealyMachine.getRespuestas(current, stimulus); ta = new
-	 * TextField(answer); ta.setEditable(false); ta.setPrefWidth(45);
-	 * gridPanel1.add(ta, j+15, i+5); }
-	 * 
-	 * }
-	 */
-
+	
 	
 	// metodo que valida que la informacion este completa
 	public boolean validateTexfield() {
@@ -382,6 +344,10 @@ public class StateMachineGui {
 
     @FXML
     void help(ActionEvent event) {
-
+    	Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setHeaderText(null);
+		alert.setTitle("Informacion");
+		alert.setContentText("Alfabeto:  Estados:");
+	alert.show();
     }
 }
